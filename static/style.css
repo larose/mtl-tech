@@ -1,0 +1,41 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', Helvetica, arial, sans-serif;
+}
+
+html, body {
+    height: 100%
+}
+
+#map {
+    height: 100%;
+}
+
+#search-div {
+    position: absolute;
+    z-index: 10;
+    width: 200px;
+
+    left: 0px;
+    top: 0px;
+    margin: 20px 0px 0px 20px;
+}
+
+.selectize-control.multi .selectize-input > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 6px;
+  background: #1da7ee;
+  color: #ffffff;
+  border: 0 solid #d0d0d0;
+}
+
+.selectize-dropdown,
+.selectize-input,
+.selectize-input input {
+  font-size: 15px;
+}
+.leaflet-container {
+    font-size: 14px;
+}
