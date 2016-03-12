@@ -1,5 +1,7 @@
-To add an organization, create a JSON file in the [orgs](../orgs)
-directory with the following properties:
+# How to add an organization
+
+Create a JSON file in the [orgs](../orgs) directory with the following
+properties:
 
 - name (string)
 - url (string)
@@ -7,7 +9,20 @@ directory with the following properties:
 - latitude (number)
 - longitude (number)
 
-Example:
+The filename must be a
+[slug](https://en.wikipedia.org/wiki/Semantic_URL#Slug) of the
+organization name and end with the `.json` suffix.
+
+See [How to find the coordinates of an
+organization](how-to-find-the-coordinates-of-an-organization.md) for
+the latitude and longitude properties.
+
+
+## Example
+
+Filename: `savoir-faire-linux.json`
+
+Content:
 
 ```
 {
