@@ -121,61 +121,29 @@ $(document).ready(function() {
   var map = createMap();
   var orgPopupTemplate = $.templates("#orgPopupTemplate");
 
-  $.get("orgs.json", function(_orgs) {
-    var orgs = {};
-    var bounds = [];
+  var orgs = {};
+  var bounds = [];
 
-    $.each(_orgs, function (slug, orgData) {
-      var marker = createMarker(orgPopupTemplate, orgData);
-      bounds.push(marker.getLatLng());
-      var org = new Org(map, marker);
-      org.show();
-      orgs[slug] = org;
-    });
-
-    map.fitBounds(bounds);
-
-    var filteredOrgs = new FilteredOrgs(orgs);
-
-    var selectize = $("#search-box-input").selectize({
-      valueField: 'value',
-      labelField: 'value',
-      searchField: 'value',
-      create: false,
-      loadThrottle: null,
-      load: function (query, callback) {
-        if (!query.length) {
-          return callback();
-        }
-
-        $.ajax({
-          url: 'partial-keywords/' + encodeURIComponent(query.toLowerCase()) + '.json',
-          type: 'GET',
-          error: function() {
-            callback();
-          },
-          success: function(res) {
-            res = res.map(function (keyword) {
-              return {
-                value: keyword
-              };
-            });
-            callback(res);
-          }
-        });
-      },
-      onItemAdd: function (keyword, item) {
-        $.ajax({
-          url: 'filters/' + encodeURIComponent(keyword) + '.json',
-          success: function (orgSlugs) {
-            filteredOrgs.onKeywordAdd(keyword, orgSlugs);
-          }
-        });
-      },
-      onItemRemove: function (keyword) {
-        filteredOrgs.onKeywordRemove(keyword);
-      }
-    });
+  $.each(ORGS, function (slug, orgData) {
+    var marker = createMarker(orgPopupTemplate, orgData);
+    bounds.push(marker.getLatLng());
+    var org = new Org(map, marker);
+    org.show();
+    orgs[slug] = org;
   });
 
+  map.fitBounds(bounds);
+
+  var filteredOrgs = new FilteredOrgs(orgs);
+
+  var selectize = $("#search-box-input").selectize({
+    create: false,
+    options: OPTIONS,
+    onItemAdd: function (keyword, item) {
+      filteredOrgs.onKeywordAdd(keyword, KEYWORDS_TO_ORGS[keyword]);
+    },
+    onItemRemove: function (keyword) {
+      filteredOrgs.onKeywordRemove(keyword);
+    }
+  });
 });

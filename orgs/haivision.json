@@ -2,6 +2,6 @@
   "latitude": 45.49132,
   "longitude": -73.719234,
   "name": "Haivision",
-  "tags": ["c++", "php", "linux", "node.js"],
+  "tags": ["C++", "PHP", "Linux", "Node.js"],
   "url": "http://www.haivision.com/"
 }

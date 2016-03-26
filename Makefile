@@ -5,7 +5,7 @@ STATIC_DIR = static
 SRC_DIR = src
 
 .PHONY: all
-all: front-end orgs keywords partial-keywords
+all: front-end $(BUILD_DIR)/data.js
 
 $(BUILD_DIR):
 	mkdir -p $@
@@ -24,22 +24,9 @@ front-end: $(BUILD_DIR)
 	cp -r $(STATIC_DIR)/* $(BUILD_DIR)
 	cp -r images $(BUILD_DIR)
 
-.PHONY: keywords
-keywords:
-	rm -rf $(BUILD_DIR)/filters
-	mkdir -p $(BUILD_DIR)/filters
-	cat $(BUILD_DIR)/orgs.json | $(PYTHON) $(SRC_DIR)/make-keywords.py $(BUILD_DIR)/filters
-
-.PHONY: orgs
-orgs: $(BUILD_DIR)
-	$(PYTHON) $(SRC_DIR)/make-orgs-json.py orgs $(BUILD_DIR)/orgs.json
-
-.PHONY: partial-keywords
-partial-keywords:
-	rm -rf $(BUILD_DIR)/partial-keywords
-	mkdir -p $(BUILD_DIR)/partial-keywords
-	$(PYTHON) $(SRC_DIR)/make-partial-keywords.py $(BUILD_DIR)/filters $(BUILD_DIR)/partial-keywords
-
 .PHONY: run-local-server
 run-local-server:
 	cd $(BUILD_DIR) && $(PYTHON) -m http.server
+
+$(BUILD_DIR)/data.js: orgs
+	$(PYTHON) $(SRC_DIR)/make-data.py orgs > $(BUILD_DIR)/data.js
