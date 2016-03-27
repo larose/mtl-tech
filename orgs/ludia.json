@@ -1,7 +1,7 @@
 {
-  "latitude": 45.502096,
-  "longitude": -73.556083,
+  "latitude": 45.5020960,
+  "longitude": -73.5560830,
   "name": "Ludia",
-  "tags": ["Python"],
-  "url": "http://ludia.com/"
+  "tags": ["Python", "C++"],
+  "url": "http://ludia.com"
 }
