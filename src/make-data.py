@@ -3,12 +3,22 @@ import json
 import os
 import sys
 
+KEYWORDS_PRIORITY = [
+    'tag',
+    'org-name'
+]
 
 def collect_keywords(org):
     for tag in org['tags']:
-        yield tag
+        yield {
+            'value': tag,
+            'type': 'tag'
+        }
 
-    yield org['name'].replace('/', '')
+    yield {
+        'value': org['name'].replace('/', ''),
+        'type': 'org-name'
+    }
 
 
 def get_orgs_from_dir(orgs_dir):
@@ -22,10 +32,11 @@ def get_orgs_from_dir(orgs_dir):
 
 
 def make_keywords(orgs):
-    keywords = collections.defaultdict(list)
+    keywords = collections.defaultdict(lambda: {'orgs': []})
     for org_slug, org in orgs.items():
         for keyword in collect_keywords(org):
-            keywords[keyword].append(org_slug)
+            keywords[keyword['value']]['orgs'].append(org_slug)
+            keywords[keyword['value']]['type'] = keyword['type']
 
     return keywords
 
@@ -33,7 +44,8 @@ def make_keywords(orgs):
 def make_keywords_to_orgs(keywords):
     result = collections.defaultdict(list)
 
-    for keyword, orgs in keywords.items():
+    for keyword, properties in keywords.items():
+        orgs = properties['orgs']
         for org in orgs:
             result[keyword.lower()].append(org)
 
@@ -43,10 +55,11 @@ def make_keywords_to_orgs(keywords):
 def make_options(keywords):
     result = []
 
-    for keyword in keywords.keys():
+    for keyword, properties in keywords.items():
         result.append({
             'text': keyword,
-            'value': keyword.lower()
+            'value': keyword.lower(),
+            'priority': KEYWORDS_PRIORITY.index(properties['type'])
         })
 
     return list(sorted(result, key=lambda k: k['value']))

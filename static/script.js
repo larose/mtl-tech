@@ -149,6 +149,10 @@ $(document).ready(function() {
     },
     onItemRemove: function (keyword) {
       filteredOrgs.onKeywordRemove(keyword);
-    }
+    },
+    sortField: [
+      {field: 'priority', direction: 'asc'},
+      {field: 'value', direction: 'asc'}
+    ]
   });
 });

@@ -28,5 +28,5 @@ front-end: $(BUILD_DIR)
 run-local-server:
 	cd $(BUILD_DIR) && $(PYTHON) -m http.server
 
-$(BUILD_DIR)/data.js: orgs
+$(BUILD_DIR)/data.js: orgs $(SRC_DIR)/make-data.py
 	$(PYTHON) $(SRC_DIR)/make-data.py orgs > $(BUILD_DIR)/data.js
