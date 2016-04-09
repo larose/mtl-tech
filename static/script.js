@@ -45,8 +45,8 @@ FilteredOrgs.prototype._updateOrgsVisibility = function () {
   });
 };
 
-var Org = function (map, marker) {
-  this._map = map;
+var Org = function (markers, marker) {
+  this._markers = markers;
   this._marker = marker;
   this._visibled = false;
 };
@@ -56,7 +56,7 @@ Org.prototype.show = function () {
     return;
   }
 
-  this._marker.addTo(this._map);
+  this._markers.addLayer(this._marker);
   this._visibled = true;
 };
 
@@ -65,7 +65,7 @@ Org.prototype.hide = function () {
     return;
   }
 
-  this._map.removeLayer(this._marker);
+  this._markers.removeLayer(this._marker);
   this._visibled = false;
 };
 
@@ -118,20 +118,25 @@ var createMarker = function (template, orgData) {
 };
 
 $(document).ready(function() {
-  var map = createMap();
   var orgPopupTemplate = $.templates("#orgPopupTemplate");
 
   var orgs = {};
   var bounds = [];
 
+  var markers = L.markerClusterGroup({
+    showCoverageOnHover: false
+  });
+
   $.each(ORGS, function (slug, orgData) {
     var marker = createMarker(orgPopupTemplate, orgData);
     bounds.push(marker.getLatLng());
-    var org = new Org(map, marker);
+    var org = new Org(markers, marker);
     org.show();
     orgs[slug] = org;
   });
 
+  var map = createMap();
+  map.addLayer(markers);
   map.fitBounds(bounds);
 
   var filteredOrgs = new FilteredOrgs(orgs);
