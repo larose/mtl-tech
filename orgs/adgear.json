@@ -1,7 +1,7 @@
 {
-  "latitude": 45.5024690,
-  "longitude": -73.5631470,
+  "latitude": 45.5006751,
+  "longitude": -73.5589191,
   "name": "AdGear",
-  "tags": ["Erlang", "C", "C++"],
+  "tags": ["Erlang", "C", "C++", "Ruby", "Java", "Scala"],
   "url": "http://adgear.com"
 }
