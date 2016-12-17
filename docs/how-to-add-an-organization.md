@@ -28,7 +28,7 @@ Content:
 {
   "name": "Savoir-faire Linux",
   "url": "http://savoirfairelinux.com",
-  "tags": ["c++", "java", "python", "php", "linux", "django", "node.js"],
+  "tags": ["C++", "Java", "Python", "PHP", "Linux", "Django", "Node.js"],
   "latitude": 45.53431,
   "longitude": -73.62074
 }
